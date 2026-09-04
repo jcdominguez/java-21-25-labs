@@ -1,0 +1,6 @@
+component,current_java,latency_p95_ms,heap_peak_mb,concurrency_model,notes
+order-api,21,420,780,fixed-thread-pool,Many blocking HTTP calls
+pricing-batch,21,950,1220,parallel-stream,CPU-bound calculations
+legacy-export,21,1800,640,single-thread,Native library accessed through JNI
+audit-worker,21,310,520,fixed-thread-pool,Request context stored in ThreadLocal
+
