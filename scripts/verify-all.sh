@@ -13,7 +13,7 @@ compile_and_run() {
   mkdir -p "$output_dir"
   find "$module_dir/src" "$module_dir/test" -name '*.java' -print0 \
     | xargs -0 javac --release 25 -d "$output_dir"
-  java -ea -cp "$output_dir" "$main_class"
+  java -cp "$output_dir" "$main_class"
 }
 
 compile_starter() {
@@ -27,7 +27,7 @@ compile_starter() {
   find "$module_dir/src" "$module_dir/test" -name '*.java' -print0 \
     | xargs -0 javac --release 25 -d "$output_dir"
 
-  if test_output="$(java -ea -cp "$output_dir" "$main_class" 2>&1)"; then
+  if test_output="$(java -cp "$output_dir" "$main_class" 2>&1)"; then
     echo "Le code de départ $(basename "$module_dir") ne contient plus l'échec pédagogique attendu." >&2
     return 1
   fi

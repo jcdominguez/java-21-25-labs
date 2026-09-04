@@ -26,7 +26,7 @@ Chaque classe est le terrain d'une nouveauté Java :
 - `OrderQueue` retient des identifiants dans leur ordre d'arrivée, terrain des collections séquencées ;
 - `OrderBatchService` charge plusieurs commandes en parallèle, terrain des threads virtuels.
 
-Rien ne tourne : pas de `main` en dehors des tests, pas de framework, pas de base de données, pas de réseau. Les tests sont des `main` qui enchaînent des `assert`, à lancer avec `-ea`.
+Rien ne tourne : pas de `main` en dehors des tests, pas de framework, pas de base de données, pas de réseau. Chaque TP a un test qui s'exécute sans option et affiche une ligne `OK` ou `ÉCHEC` par vérification.
 
 ## Prérequis
 
