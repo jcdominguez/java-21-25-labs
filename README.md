@@ -2,6 +2,32 @@
 
 Ce dépôt accompagne la formation « Nouveautés Java 21 à 25 ». Le fil rouge est un petit service de traitement de commandes, volontairement indépendant d'un framework.
 
+## Ce que contient l'application
+
+Une maquette de service de traitement de commandes, réduite à trois classes indépendantes.
+
+```mermaid
+graph LR
+    CMD["Commande reçue"]
+    SUM["CommandSummary<br/>ligne de journal"]
+    QUE["OrderQueue<br/>file d'attente"]
+    BAT["OrderBatchService<br/>chargement parallèle"]
+    TST["OrderModernizationTest<br/>vérifie les trois"]
+    CMD --> SUM
+    CMD --> QUE
+    QUE --> BAT
+    SUM --> TST
+    BAT --> TST
+```
+
+Chaque classe est le terrain d'une nouveauté Java :
+
+- `CommandSummary` traduit une commande en ligne de journal, terrain du pattern matching ;
+- `OrderQueue` retient des identifiants dans leur ordre d'arrivée, terrain des collections séquencées ;
+- `OrderBatchService` charge plusieurs commandes en parallèle, terrain des threads virtuels.
+
+Rien ne tourne : pas de `main` en dehors des tests, pas de framework, pas de base de données, pas de réseau. Les tests sont des `main` qui enchaînent des `assert`, à lancer avec `-ea`.
+
 ## Prérequis
 
 - JDK 25 disponible dans le terminal ;
