@@ -47,7 +47,6 @@ GUIDE.md    parcours autonome, énoncés et corrigés
 exercices/  code de départ, organisé par sujet
 solutions/  résultats de référence
 demos/      exemples courts exécutables
-data/       inventaire de l'atelier de décision
 scripts/    validation complète du dépôt
 ```
 
@@ -69,12 +68,6 @@ Chaque exercice est indépendant. Il n'existe ni application globale, ni base de
 | `scoped-values` | Scoped Values | Test de comportement |
 
 Le Guide donne, pour chaque dossier, la commande exacte, le résultat initial attendu, l'algorithme en français et le corrigé.
-
-## Atelier de décision complémentaire
-
-Le dossier `exercices/audit-migration/` propose un audit sans code. À partir de `data/migration-inventory.csv`, il faut produire une recommandation de migration Java 21 vers Java 25 avec, pour chaque décision, un statut, un effet observable, une méthode de validation, un risque et un retour arrière.
-
-Le livrable à compléter est `exercices/audit-migration/recommandation.md`. Une référence est disponible dans `solutions/audit-migration/`.
 
 ## Démonstrations
 
