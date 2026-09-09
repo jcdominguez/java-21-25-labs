@@ -1,10 +1,12 @@
-> [!abstract] Guide stagiaire - Nouveautés Java 21 à 25
+> [!NOTE]
+> **Guide stagiaire - Nouveautés Java 21 à 25**
 > Guide à suivre pendant la séance ou à rejouer seul ensuite. Il présente les mécanismes dans l'ordre de la formation, porte les manipulations et regroupe les corrigés en fin de document.
 >
 > - [JDK 21, OpenJDK](https://openjdk.org/projects/jdk/21/)
 > - [JDK 25, OpenJDK](https://openjdk.org/projects/jdk/25/)
 
-> [!info] Comment ce Guide est organisé
+> [!NOTE]
+> **Comment ce Guide est organisé**
 > La formation rassemble des sujets **indépendants**. Chaque exercice a son dossier, ses sources et son moyen de vérification. Les démonstrations et perspectives disposent de leur propre procédure ou question de décision.
 >
 > Les énoncés de référence vivent ici. Le dépôt en garde la copie technique nécessaire à l'exécution. Les corrigés sont regroupés à la fin pour permettre une première recherche autonome.
@@ -67,7 +69,8 @@ Repartir de l'état de référence, en **jetant** ce que vous avez tapé depuis 
 git restore .
 ```
 
-> [!warning] `git restore .` ne demande pas confirmation
+> [!WARNING]
+> **`git restore .` ne demande pas confirmation**
 > Cette commande écrase vos fichiers avec la version enregistrée. Tout ce que vous avez modifié sans l'avoir mis de côté est perdu, sans corbeille et sans retour possible. Utilisez `git stash` si vous voulez garder votre travail.
 
 Vous n'aurez pas besoin de changer de branche : chaque sujet a **son propre dossier**, et son corrigé vous attend dans `solutions/`.
@@ -102,7 +105,8 @@ OK    Décrire un cercle
 1 vérification(s) en échec
 ```
 
-> [!tip] Le test est votre énoncé
+> [!TIP]
+> **Le test est votre énoncé**
 > Ne cherchez pas la consigne ailleurs. Chaque ligne `ÉCHEC` nomme ce qui reste à faire, et le sujet est terminé quand la dernière ligne affiche `exercice validé`. Relancez le test aussi souvent que vous voulez, il ne coûte rien.
 
 Deux sujets n'ont pas de test, et c'est normal : `imports-de-modules`, dont le juge est le **compilateur**, et `javadoc-markdown`, dont le juge est la **page produite**.
@@ -119,7 +123,8 @@ Trois réglages à l'ouverture :
 2. Clic droit sur `src`, `Mark Directory as` → `Sources Root`.
 3. Clic droit sur `test`, `Mark Directory as` → `Test Sources Root`.
 
-> [!warning] Aucune flèche verte sur les classes de `src`, et c'est voulu
+> [!WARNING]
+> **Aucune flèche verte sur les classes de `src`, et c'est voulu**
 > Les classes de `src` sont déclarées `final class`, sans `public` et sans `main`. Le seul point d'entrée est la classe de test. Ce n'est pas un défaut de configuration.
 
 Configuration d'exécution : `Application`, classe principale celle du test, aucune option VM.
@@ -160,7 +165,8 @@ String greeting = STR."Hello, \{name}!";
 
 C'est la seule preview en cinq ans de process à ne jamais être devenue finale. Sources : [JEP 430](https://openjdk.org/jeps/430), [JEP 459](https://openjdk.org/jeps/459), [JEP 465, withdrawn](https://openjdk.org/jeps/465).
 
-> [!question] Pourquoi le programme l'annonce-t-il alors ?
+> [!NOTE]
+> **Question : Pourquoi le programme l'annonce-t-il alors ?**
 > Parce qu'un programme de formation se construit à partir des annonces de preview, et que celle-ci a été retirée après. C'est exactement le risque que la grille des statuts sert à éviter : une preview n'est pas une promesse. Une fonctionnalité annoncée en preview peut disparaître sans jamais atteindre une version finale, et c'est ce qui s'est produit ici.
 
 ## Interpoler aujourd'hui
@@ -184,10 +190,12 @@ String c = sb.toString();
 
 La règle de choix : le `+` par défaut, `String.format` quand le même gabarit se réutilise à plusieurs endroits, `StringBuilder` quand vous assemblez la chaîne morceau par morceau dans une boucle.
 
-> [!question] Le `+` est-il lent ?
+> [!NOTE]
+> **Question : Le `+` est-il lent ?**
 > Non, pas dans le cas courant. Réécrire une concaténation simple en `StringBuilder` « pour la performance » n'apporte rien et rend le code moins lisible. Le `StringBuilder` se justifie quand le nombre de morceaux n'est pas connu à l'écriture, typiquement une boucle.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Le statut d'une fonctionnalité se lit avant sa syntaxe : final, preview, incubateur.
 > - Une preview peut être retirée, les String Templates en sont le seul exemple à ce jour.
 > - Pour interpoler en Java 25 : `+` par défaut, `String.format` pour un gabarit réutilisé, `StringBuilder` pour un assemblage en boucle.
@@ -231,7 +239,8 @@ record Circle(double radius) implements Shape {
 
 `sealed` arrête la liste : aucune autre classe ne peut implémenter `Shape`. Retenez ce mot, c'est lui qui rend possible tout ce qui suit.
 
-> [!info] `sealed` n'est pas au programme
+> [!NOTE]
+> **`sealed` n'est pas au programme**
 > Il date de Java 17, et sert ici de **terrain**. Le sujet des deux jours, c'est ce que le `switch` sait en faire depuis Java 21.
 
 ### Étape 3, du `if instanceof` au `switch`
@@ -262,7 +271,8 @@ return switch (shape) {
 
 Relancez : quatre lignes vertes.
 
-> [!question] Pourquoi ça compile sans `default` ?
+> [!NOTE]
+> **Question : Pourquoi ça compile sans `default` ?**
 > Parce que `Shape` est `sealed`. Le compilateur connaît la liste complète des types autorisés par le `permits`, vérifie que le `switch` les traite tous, et ne réclame donc aucun cas par défaut.
 
 ### Étape 4, un cas particulier avant le cas général
@@ -305,7 +315,8 @@ Retirez le `default` et `Ellipse`, ou repartez de l'état de référence :
 git restore .
 ```
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - `sealed` arrête la liste des types possibles, et c'est cette liste qui rend le `switch` vérifiable.
 > - Sur une hiérarchie fermée, un `switch` complet se passe de `default`, et l'ajout d'un type casse la compilation à l'endroit exact où une décision manque.
 > - Ajouter un `default` sur une hiérarchie fermée éteint ce filet : le cas oublié devient un comportement silencieux à l'exécution.
@@ -337,12 +348,14 @@ OK    Refuser ce qui n'est pas un segment
 
 Le travail : récrire `describe` avec des record patterns imbriqués, en ajoutant les deux cas manquants. Un segment dont les deux extrémités coïncident est un `point unique`, un segment ni horizontal ni vertical est `oblique`.
 
-> [!warning] Ici la nouveauté n'est pas nécessaire, elle est plus lisible
+> [!WARNING]
+> **Ici la nouveauté n'est pas nécessaire, elle est plus lisible**
 > Tout cet exercice se résout sans record pattern, à coups d'accesseurs. Le test vérifie donc le **comportement**, pas la forme. C'est la relecture qui juge la forme, et c'est le sujet du débriefing.
 
 **Algorithme en français** : reconnaître d'abord un segment réduit à un point, puis un segment horizontal, vertical ou oblique ; traiter enfin ce qui n'est pas un segment.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Un record pattern reconnaît le type et extrait ses composants en une construction.
 > - Les patterns peuvent s'imbriquer pour parcourir plusieurs records.
 > - Les cas les plus précis doivent précéder ceux qui les recouvrent.
@@ -361,10 +374,12 @@ case Segment(Point(_, int y1), Point(_, int y2)) when y1 == y2 -> "horizontal";
 
 Récrivez les deux branches du corrigé, recompilez et vérifiez que les résultats restent identiques. Cette manipulation se juge à la compilation et à la relecture.
 
-> [!question] `_` est-il une variable au nom très court ?
+> [!NOTE]
+> **Question : `_` est-il une variable au nom très court ?**
 > Non. Il marque une valeur ignorée et ne peut pas être lu dans la suite du code.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - `_` documente une valeur reçue mais volontairement inutilisée.
 > - Il réduit le bruit sans changer le comportement.
 > - Il ne doit pas masquer une donnée dont le traitement est réellement nécessaire.
@@ -388,7 +403,8 @@ static String classifier(double valeur) {
 
 Ce code nécessite les options de preview correspondant au JDK 25. La formation le lit comme une perspective et ne l'intègre pas aux exercices sans option.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Le pattern teste qu'une conversion primitive est exacte avant de l'appliquer.
 > - La fonctionnalité est en preview dans Java 25.
 > - Son statut impose de l'isoler d'un socle de production.
@@ -426,7 +442,8 @@ Deux méthodes existantes, `first()` et `last()`, montrent ce qu'il fallait écr
 
 **Algorithme en français** : exposer le champ comme une collection séquencée, ajouter en tête avec l'opération dédiée, retirer le premier élément, puis copier la vue inversée dans une liste stable.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Le type déclaré décide des opérations visibles.
 > - Les interfaces séquencées unifient premier élément, dernier élément et ordre inverse.
 > - `reversed()` rend une vue ; une copie est utile lorsque le résultat doit rester indépendant.
@@ -445,14 +462,16 @@ javadoc -d apidocs src/training/docs/Temperature.java
 
 Ouvrez `apidocs/training/docs/Temperature.html`, puis récrivez les commentaires et régénérez.
 
-> [!warning] Ici le résultat ne change pas, et c'est la leçon
+> [!WARNING]
+> **Ici le résultat ne change pas, et c'est la leçon**
 > La page produite est rigoureusement identique avant et après : mêmes `<ul>`, mêmes `<li>`, même `<code>`. Ce qui change est la **lisibilité de la source**, pas la sortie. Aucun test ne peut donc juger cet exercice, seule la relecture le peut.
 
 Une fois la conversion faite, essayez le piège : remettez une liste Markdown dans un commentaire `/** */`, régénérez, et regardez le HTML.
 
 **Algorithme en français** : produire d'abord la référence HTML, convertir chaque commentaire `/** */` en `///`, remplacer les balises HTML par leur équivalent Markdown, régénérer, puis comparer les deux pages.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - `///` active le Markdown dans les commentaires de documentation.
 > - Les tags Javadoc comme `@param` et `@return` restent disponibles.
 > - Le bénéfice se mesure dans la source ; le HTML produit doit conserver le sens.
@@ -477,7 +496,8 @@ error: no class declared in source file
 
 **Algorithme en français** : déclarer une méthode `main` d'instance sans argument, puis afficher le message avec `IO.println`. Relancer directement le fichier source.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Java 25 permet un petit programme sans déclaration explicite de classe.
 > - La méthode `main` peut être une méthode d'instance sans argument.
 > - Cette forme vise l'apprentissage et les programmes compacts ; elle n'oblige pas à récrire les applications existantes.
@@ -511,7 +531,8 @@ java -cp out training.modules.InventaireTest
 
 **Algorithme en français** : placer `import module java.base;` après le `package`, recompiler, puis exécuter le test. Si un nom devient ambigu, ajouter un import de type explicite pour trancher.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Un import de module rend visibles les types publics de tous les packages exportés par ce module.
 > - Il porte sur un module, pas sur un package.
 > - Le gain de concision doit être comparé au risque d'ambiguïté des noms.
@@ -546,10 +567,12 @@ Le travail : déplacer la validation et l'affectation **avant** `super()`.
 
 **Algorithme en français** : refuser d'abord le nom invalide, affecter ensuite le champ `final`, puis appeler `super()`. Relancer le test pour vérifier la valeur observée par la base et l'absence de construction en cas d'erreur.
 
-> [!question] Peut-on utiliser `this` librement avant `super()` ?
+> [!NOTE]
+> **Question : Peut-on utiliser `this` librement avant `super()` ?**
 > Non. Java 25 autorise un prologue limité avant l'appel explicite au constructeur parent ; l'objet ne doit pas s'échapper et certaines utilisations de `this` restent interdites.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Le prologue permet de valider et préparer les arguments avant de construire la base.
 > - Un champ de l'objet peut être affecté lorsque les règles d'initialisation le permettent.
 > - Le but est d'empêcher le constructeur parent d'observer un état invalide.
@@ -589,7 +612,8 @@ La ligne verte n'est pas un cadeau, c'est un filet : elle utilise `windowFixed`,
 
 **Algorithme en français** : créer un ensemble de clés pour une évaluation du pipeline ; pour chaque relevé, transmettre le premier portant une clé nouvelle et ignorer les suivants ; continuer jusqu'à la fin du flux.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Un Gatherer étend un pipeline par une opération intermédiaire personnalisée.
 > - Son état appartient à une évaluation du pipeline.
 > - Ne rien émettre et arrêter le traitement sont deux décisions différentes.
@@ -612,10 +636,12 @@ for (; i < espece.loopBound(a.length); i += espece.length()) {
 
 Une boucle scalaire doit traiter la fin du tableau lorsque sa taille n'est pas un multiple du nombre de lanes. L'espèce préférée dépend de la machine ; ne figez donc pas une largeur supposée.
 
-> [!question] Pourquoi ne pas laisser uniquement le JIT vectoriser une boucle ordinaire ?
+> [!NOTE]
+> **Question : Pourquoi ne pas laisser uniquement le JIT vectoriser une boucle ordinaire ?**
 > L'auto-vectorisation reste utile, mais elle n'offre pas toujours un contrôle prévisible sur les opérations produites. L'API explicite le calcul vectoriel ; seule une mesure sur la charge réelle justifie son adoption.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Un vecteur traite plusieurs valeurs de même type en une opération.
 > - La largeur préférée dépend du processeur.
 > - La Vector API reste en incubation dans Java 25.
@@ -639,7 +665,8 @@ java -XX:+UseZGC -Xlog:gc -version
 
 La sortie doit contenir `Using The Z Garbage Collector`. Sous Java 25, aucune option supplémentaire ne sélectionne le mode générationnel.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - ZGC vise des pauses très faibles sur des tas importants.
 > - Le mode générationnel exploite la mortalité rapide de nombreux objets.
 > - Une migration de GC se valide avec les objectifs de service et des mesures comparables.
@@ -666,7 +693,8 @@ Charger ce cache :
 java -XX:AOTCache=app.aot -cp app.jar com.example.App
 ```
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - L'AOT déplace une partie du travail de démarrage vers une phase d'entraînement.
 > - Le bénéfice attendu concerne surtout le démarrage et la montée en régime.
 > - Le cache dépend de l'application et de son environnement ; il doit être régénéré après les changements pertinents.
@@ -681,7 +709,8 @@ L'effet dépend du profil d'allocation. Mesurez la taille du tas et le comportem
 
 Dans Java 25, l'option produit reste désactivée par défaut et s'active avec `-XX:+UseCompactObjectHeaders`. Comparez l'application avec et sans cette option, sans changer la charge ni les autres réglages.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Le gain porte sur le coût fixe de chaque objet.
 > - L'impact cumulé devient visible quand les petits objets sont très nombreux.
 > - Java 25 finalise cette évolution, mais son activation et son intérêt se vérifient sur l'environnement cible.
@@ -712,7 +741,8 @@ Exemple Java 25, tracer uniquement les appels à `HashMap.resize` :
 java -XX:StartFlightRecording:jdk.MethodTrace#filter=java.util.HashMap::resize,filename=recording.jfr MonApplication
 ```
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - JFR sert à enregistrer avant d'expliquer.
 > - Un événement n'est utile que relié à une question de diagnostic.
 > - Les nouveaux événements améliorent l'observation ; ils ne remplacent pas un protocole de mesure.
@@ -754,7 +784,8 @@ Un seul geste est demandé, et il ne touche ni à la méthode qui attend, ni au 
 
 **Algorithme en français** : remplacer le pool fixe par un exécuteur créant un thread virtuel par tâche, conserver la collecte des `Future` dans le même ordre, puis comparer la durée mesurée.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Les threads virtuels augmentent la capacité des traitements qui passent du temps à attendre.
 > - Ils ne rendent pas un calcul CPU plus rapide.
 > - Le style reste un traitement séquentiel lisible dans chaque thread ; la JVM gère son montage sur les porteurs.
@@ -783,13 +814,16 @@ synchronized byte[] getData() throws IOException {
 
 Le verrou protège un état partagé, la lecture attend une réponse distante. Avant Java 24, ce porteur gelait pendant l'attente. Depuis Java 24 ([JEP 491](https://openjdk.org/jeps/491)), le thread virtuel se détache comme pour n'importe quel autre blocage, et le porteur sert une autre requête. `Object.wait()` se détache aussi. Le pinning qui reste se produit quand le code se bloque sous une frame native (JNI, FFM) ; l'événement JFR `jdk.VirtualThreadPinned` le signale.
 
-> [!question] Faut-il remplacer tous les `synchronized` par `ReentrantLock` avant de migrer ?
+> [!NOTE]
+> **Question : Faut-il remplacer tous les `synchronized` par `ReentrantLock` avant de migrer ?**
 > Non. C'était la recommandation d'avant Java 24, quand le `synchronized` épinglait ; elle est obsolète. Le but affiché de JEP 491 est que le code existant passe aux threads virtuels **sans** renoncer au `synchronized`. Le code déjà réécrit en `ReentrantLock` se garde, pas de retour en arrière.
 
-> [!question] Le `synchronized` devient-il gratuit ?
+> [!NOTE]
+> **Question : Le `synchronized` devient-il gratuit ?**
 > Non. La contention reste : deux tâches qui disputent le même verrou se mettent en file, et l'attente se paie pareil. Ce qui change, c'est que cette file ne bloque plus les porteurs, donc plus tout le service. La règle de conception ne change pas : ne pas tenir un verrou pendant une attente longue.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Avant Java 24, un thread virtuel bloqué dans un `synchronized` épinglait son porteur ; quelques dizaines de tâches suffisaient à geler le service.
 > - Depuis Java 24, il se détache comme pour n'importe quel autre blocage, et le code `synchronized` existant se migre tel quel.
 > - Le pinning subsiste sous frame native (JNI, FFM) ; JFR le signale avec `jdk.VirtualThreadPinned`.
@@ -841,10 +875,12 @@ false
 
 Après le retour de `run()`, `isBound()` vaut `false` dans cet exemple. Appeler `get()` à cet endroit lèverait `NoSuchElementException`. La liaison se termine aussi si une exception remonte : aucun `remove()` à placer dans un `finally`. Si une liaison extérieure existait, elle serait restaurée.
 
-> [!info] Pourquoi une clé `static` ne mélange-t-elle pas les requêtes ?
+> [!NOTE]
+> **Pourquoi une clé `static` ne mélange-t-elle pas les requêtes ?**
 > Les threads peuvent partager la même clé tout en ayant des liaisons différentes. Deux threads qui lient respectivement `R-42` et `R-99` lisent chacun leur identifiant. Un champ partagé contenant directement l’identifiant n’offrirait pas cette séparation.
 
-> [!warning] L’objet transporté n’est pas rendu immuable
+> [!WARNING]
+> **L’objet transporté n’est pas rendu immuable**
 > Une `String` est immuable ; une liste mutable reste modifiable même si elle est transportée par `ScopedValue`. Préférer un contexte immuable pour cet usage. Il n’y a pas de `set()` pour remplacer la liaison en place, mais un appel imbriqué peut établir une autre liaison temporaire, puis retrouver la précédente à son retour.
 
 Les paramètres explicites restent adaptés aux dépendances simples. `ScopedValue` est utile pour un contexte lu à travers plusieurs appels, dont la disponibilité doit se terminer avec l’opération. Un `ThreadLocal` permet aussi une lecture sans paramètre, mais demande d’organiser explicitement la durée de présence de la valeur, avec `set()` et `remove()`.
@@ -877,7 +913,8 @@ OK    Ne laisser aucune liaison après le traitement
 
 Chaque tâche rend `absent:...`. La raison mérite d'être comprise avant de coder.
 
-> [!info] Pourquoi le code de départ échoue
+> [!NOTE]
+> **Pourquoi le code de départ échoue**
 > Une valeur posée dans un `ThreadLocal` appartient au thread qui l'a posée, ici le thread appelant. Les tâches s'exécutent sur d'autres threads, qui ne la voient pas.
 >
 > **Ce n'est pas propre aux threads virtuels.** Un pool fixe de threads de plateforme produit le même échec avec ce `ThreadLocal` : le contexte est absent parce que le thread est différent, pas parce qu'il est virtuel.
@@ -890,7 +927,8 @@ La ligne verte est un filet : le code de départ retire son `ThreadLocal` dans u
 
 **Algorithme en français** : remplacer la clé mutable par une `ScopedValue`, capturer le contexte dans la lambda de chaque tâche, établir la liaison dans cette tâche autour de l'appel qui doit la lire, puis supprimer le nettoyage manuel devenu inutile.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Une liaison rend une valeur accessible aux appels descendants pendant un bloc borné.
 > - La clé ne fournit pas de `set()` ; une portée imbriquée peut toutefois établir une liaison temporaire différente.
 > - L'objet transporté n'est pas rendu immuable par l'API.
@@ -904,7 +942,8 @@ Une Stable Value vise l'initialisation différée d'une donnée qui ne changera 
 
 La fonctionnalité reste en preview dans Java 25. Comparez-la à une initialisation immédiate, à un holder statique ou à une synchronisation explicite avant de l'expérimenter.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Stable Values traite l'initialisation différée et la stabilité après création.
 > - Scoped Values traite la transmission descendante d'un contexte borné.
 > - Le statut preview impose une expérimentation isolée et supprimable.
@@ -915,10 +954,12 @@ Source : [JEP 502, Stable Values](https://openjdk.org/jeps/502).
 
 Associez le problème à la primitive avant de choisir une API : beaucoup d'attentes indépendantes orientent vers les threads virtuels ; un contexte descendant borné vers Scoped Values ; une valeur créée au premier besoin vers Stable Values ; un groupe de tâches filles dont les vies doivent rester liées vers la concurrence structurée.
 
-> [!question] Peut-on combiner ces primitives ?
+> [!NOTE]
+> **Question : Peut-on combiner ces primitives ?**
 > Oui. Elles répondent à des dimensions différentes. Une opération peut utiliser des threads virtuels, partager un contexte par Scoped Values et organiser ses tâches filles dans une portée structurée.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Choisir d'abord d'après le problème : attente, contexte, initialisation ou durée de vie d'un groupe de tâches.
 > - Plusieurs primitives peuvent coopérer dans une même opération.
 > - Leur proximité dans le JDK ne signifie pas qu'elles sont interchangeables.
@@ -929,7 +970,8 @@ La concurrence structurée traite plusieurs tâches filles comme une seule opér
 
 Dans Java 25, l'API reste en preview. La formation compare son modèle à l'orchestration manuelle par `Future`, sans en faire une dépendance du socle pratique.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - La portée structure la durée de vie des tâches filles.
 > - L'échec et l'annulation deviennent des décisions de l'opération globale.
 > - Les liaisons de Scoped Values sont héritées dans ce cadre structuré.
@@ -959,7 +1001,8 @@ java --enable-native-access=ALL-UNNAMED demos/FfmStrlenDemo.java
 
 Dans les deux cas, le résultat attendu est `FFM validée : strlen("Java 25") = 7` ; le premier lancement affiche auparavant les avertissements d'accès natif.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - FFM couvre l'appel natif et la mémoire hors tas avec des abstractions Java.
 > - Une arène borne la durée de vie des segments qu'elle gère.
 > - Le contrat de la bibliothèque native reste une responsabilité de l'intégration.
@@ -980,7 +1023,8 @@ java demos/ClassFileDemo.java
 
 Résultat attendu : `Class-File API validée : ClassFileDemo`.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - L'API standardise la manipulation du format de classe.
 > - Son modèle suit l'évolution du class-file.
 > - La validité structurelle du bytecode ne prouve pas la validité de la transformation.
@@ -999,7 +1043,8 @@ java demos/KemDemo.java
 
 Résultat attendu : `KEM validé : même secret, message d'encapsulation distinct`.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - KEM encapsule puis décapsule un secret partagé.
 > - L'API ne conçoit pas le protocole cryptographique.
 > - Le fournisseur et des vecteurs de test connus doivent être vérifiés.
@@ -1018,7 +1063,8 @@ java demos/KdfDemo.java
 
 Résultat attendu : `KDF validée : résultat reproductible et séparé par contexte`.
 
-> [!success] Ce qu'il faut retenir
+> [!TIP]
+> **Ce qu'il faut retenir**
 > - Une KDF sépare les clés selon leur usage à partir d'un même secret.
 > - Le protocole fixe l'algorithme, le sel, le contexte et la longueur.
 > - Une API cryptographique ne remplace ni le protocole ni les vecteurs de test.
