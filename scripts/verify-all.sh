@@ -41,19 +41,72 @@ compile_starter() {
   echo "Code de départ $(basename "$module_dir") compilable, échec pédagogique confirmé."
 }
 
-compile_starter "$REPO_DIR/exercices/tp1-modernisation" \
-  "training.orders.OrderModernizationTest" \
-  "Remplacer le pool fixe"
-compile_starter "$REPO_DIR/exercices/tp2-gatherers" \
-  "training.orders.EventAnalyticsTest" \
-  "Le gatherer doit filtrer"
-compile_starter "$REPO_DIR/exercices/tp3-contexte" \
-  "training.orders.ContextualOrderServiceTest" \
-  "Le contexte doit être lié"
+# Exercices par sujet du chapitre « Langage et collections »
 
-compile_and_run "$REPO_DIR/solutions/tp1-modernisation" "training.orders.OrderModernizationTest"
-compile_and_run "$REPO_DIR/solutions/tp2-gatherers" "training.orders.EventAnalyticsTest"
-compile_and_run "$REPO_DIR/solutions/tp3-contexte" "training.orders.ContextualOrderServiceTest"
+compile_starter "$REPO_DIR/exercices/pattern-matching-switch" \
+  "training.shapes.ShapeDescriberTest" \
+  "Décrire un triangle"
+compile_starter "$REPO_DIR/exercices/record-patterns" \
+  "training.geometry.SegmentDescriberTest" \
+  "Reconnaître un segment réduit à un point"
+compile_starter "$REPO_DIR/exercices/collections-sequencees" \
+  "training.sequenced.WaitingLineTest" \
+  "Placer un ticket prioritaire en tête de file"
+compile_starter "$REPO_DIR/exercices/constructeurs-flexibles" \
+  "training.sensors.CapteurNommeTest" \
+  "La base lit le nom déjà affecté"
+
+compile_and_run "$REPO_DIR/solutions/pattern-matching-switch" "training.shapes.ShapeDescriberTest"
+compile_and_run "$REPO_DIR/solutions/record-patterns" "training.geometry.SegmentDescriberTest"
+compile_and_run "$REPO_DIR/solutions/collections-sequencees" "training.sequenced.WaitingLineTest"
+compile_and_run "$REPO_DIR/solutions/constructeurs-flexibles" "training.sensors.CapteurNommeTest"
+
+# Exercices par sujet des chapitres « Pipelines de données » et « Concurrence »
+
+compile_starter "$REPO_DIR/exercices/stream-gatherers" \
+  "training.releves.SerieDeRelevesTest" \
+  "Ne garder que le premier relevé de chaque capteur"
+compile_starter "$REPO_DIR/exercices/threads-virtuels" \
+  "training.taches.LotDeTachesTest" \
+  "Exécuter les 1000 tâches de 10 ms en moins d'une seconde"
+compile_starter "$REPO_DIR/exercices/scoped-values" \
+  "training.contexte.TraitementTraceTest" \
+  "Lire l'identifiant de la requête dans chaque tâche"
+
+compile_and_run "$REPO_DIR/solutions/stream-gatherers" "training.releves.SerieDeRelevesTest"
+compile_and_run "$REPO_DIR/solutions/threads-virtuels" "training.taches.LotDeTachesTest"
+compile_and_run "$REPO_DIR/solutions/scoped-values" "training.contexte.TraitementTraceTest"
+
+# Trois exercices dont le juge n'est pas un test
+
+starter_ne_compile_pas() {
+  local module_dir="$1"
+  local output_dir="$BUILD_DIR/nocompile-$(basename "$module_dir")"
+  mkdir -p "$output_dir"
+
+  if find "$module_dir/src" "$module_dir/test" -name '*.java' -print0 \
+      | xargs -0 javac --release 25 -d "$output_dir" 2>/dev/null; then
+    echo "Le code de départ $(basename "$module_dir") compile alors qu'il ne devrait pas." >&2
+    return 1
+  fi
+  echo "Code de départ $(basename "$module_dir") non compilable, comme attendu."
+}
+
+starter_ne_compile_pas "$REPO_DIR/exercices/imports-de-modules"
+compile_and_run "$REPO_DIR/solutions/imports-de-modules" "training.modules.InventaireTest"
+
+if java "$REPO_DIR/exercices/fichiers-source-compacts/Bienvenue.java" >/dev/null 2>&1; then
+  echo "Le fichier de départ fichiers-source-compacts s'exécute alors qu'il est vide de code." >&2
+  exit 1
+fi
+echo "Code de départ fichiers-source-compacts non exécutable, comme attendu."
+java "$REPO_DIR/solutions/fichiers-source-compacts/Bienvenue.java"
+
+JAVADOC_MD="$BUILD_DIR/javadoc-markdown"
+javadoc -quiet -d "$JAVADOC_MD" \
+  "$REPO_DIR/solutions/javadoc-markdown/src/training/docs/Temperature.java" >/dev/null 2>&1
+grep -q "<li>Celsius</li>" "$JAVADOC_MD/training/docs/Temperature.html"
+echo "Javadoc Markdown de la solution rendue en HTML, comme attendu."
 
 DEMO_OUTPUT="$BUILD_DIR/demos"
 mkdir -p "$DEMO_OUTPUT"
