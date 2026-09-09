@@ -1,72 +1,125 @@
 # Ateliers Java 21 à 25
 
-Ce dépôt accompagne la formation « Nouveautés Java 21 à 25 ». La formation compile des concepts indépendants : **chaque sujet a son dossier, son code de départ, son test et sa solution**, et se comprend sans les autres.
+Ce dépôt accompagne la formation « Nouveautés Java 21 à 25 ». Il contient les exercices, leurs solutions et les démonstrations exécutables avec un JDK 25, sans framework ni dépendance externe.
 
-Le [Guide stagiaire](GUIDE.md) présente les notions dans l'ordre de la formation, donne les consignes des exercices et regroupe les corrigés en fin de document.
+## Commencer ici
 
-## Un sujet, un exercice
+Le [Guide stagiaire](GUIDE.md) constitue le parcours principal. Il présente les notions dans l'ordre de la formation, donne les consignes détaillées et regroupe les corrigés à la fin.
 
-Un dossier d'exercice contient un domaine réduit à une phrase, une classe à compléter et un test. Aucun personnage à mémoriser, aucune classe d'un autre exercice à connaître.
+Cloner le dépôt :
 
-Rien ne tourne en dehors des tests : pas de framework, pas de base de données, pas de réseau, aucune dépendance à télécharger. Un test se lance sans option et affiche une ligne `OK` ou `ÉCHEC` par vérification, puis `<sujet> validé` quand tout passe. Il est à la fois l'énoncé et le correcteur.
+```bash
+git clone https://github.com/jcdominguez/java-21-25-labs.git
+```
 
-Quelques sujets se montrent au lieu de se pratiquer : ils vivent dans `demos/`.
+Entrer dans le dossier :
+
+```bash
+cd java-21-25-labs
+```
+
+Ouvrir ensuite [le Guide](GUIDE.md) et commencer par sa section « Avant de commencer ».
 
 ## Prérequis
 
 - JDK 25 disponible dans le terminal ;
-- un éditeur ou un IDE capable d'ouvrir des sources Java ;
-- aucun accès réseau requis pendant les TP.
+- Git ;
+- un éditeur ou un IDE capable d'ouvrir des sources Java.
 
-Vérifier l'environnement :
+Vérifier le runtime :
 
 ```bash
 java -version
 ```
 
-Puis :
+Vérifier le compilateur :
 
 ```bash
 javac -version
 ```
 
-## Organisation
+Les deux commandes doivent annoncer une version 25.
+
+## Organisation du dépôt
 
 ```text
-exercices/   énoncés et code de départ
-data/        inventaire synthétique de l'atelier de décision
-solutions/   résultats de référence, à ne pas ouvrir avant la correction
-demos/       exemples courts utilisés par le formateur
-scripts/     compilation et vérification sans dépendance externe
+GUIDE.md    parcours autonome, énoncés et corrigés
+exercices/  code de départ, organisé par sujet
+solutions/  résultats de référence
+demos/      exemples courts exécutables
+data/       inventaire de l'atelier de décision
+scripts/    validation complète du dépôt
 ```
 
-Les fichiers compilés vont dans `out/`, ignoré par Git. Rien de généré n'est versionné.
+Chaque exercice est indépendant. Il n'existe ni application globale, ni base de données, ni service réseau à démarrer. Ouvrir le dossier du sujet évite que l'IDE mélange le code de départ et la solution.
 
-## Un dossier par sujet, pas de branche
+## Exercices
 
-La branche `main` porte tout le dépôt, et c'est la seule. Chaque sujet a **son dossier** dans `exercices/`, avec son code de départ, et son corrigé dans `solutions/` sous le même nom.
-
-Il n'y a donc aucune branche d'étape à connaître : pour repartir de l'état de référence, `git restore .` suffit.
-
-## Les exercices, dans l'ordre du déroulé
-
-| Dossier | Sujet | Ce qui juge |
+| Dossier | Sujet | Vérification |
 |---|---|---|
 | `pattern-matching-switch` | Pattern matching pour `switch` | Test de comportement |
-| `record-patterns` | Record patterns | Test de comportement |
+| `record-patterns` | Record patterns | Test de comportement et relecture |
 | `collections-sequencees` | Collections séquencées | Test de comportement |
-| `javadoc-markdown` | Commentaires Markdown en Javadoc | Rendu HTML de `javadoc` |
-| `fichiers-source-compacts` | Fichier source compact | L'exécution elle-même |
-| `imports-de-modules` | Import de module | Le compilateur |
-| `constructeurs-flexibles` | Corps de constructeur flexible | Test de comportement |
+| `javadoc-markdown` | Commentaires Markdown en Javadoc | Page HTML produite |
+| `fichiers-source-compacts` | Fichiers source compacts | Exécution du fichier |
+| `imports-de-modules` | Imports de modules | Compilateur puis test |
+| `constructeurs-flexibles` | Corps de constructeurs flexibles | Test de comportement |
 | `stream-gatherers` | Stream Gatherers | Test de comportement |
-| `threads-virtuels` | Threads virtuels | La durée mesurée sur 1000 tâches |
+| `threads-virtuels` | Threads virtuels | Résultat et durée mesurée |
 | `scoped-values` | Scoped Values | Test de comportement |
-| `audit-migration` | Décision de migration | Restitution écrite, pas de test |
 
-`audit-migration` est le seul à ne pas porter de code : c'est un atelier de décision, dont le livrable est un document.
+Le Guide donne, pour chaque dossier, la commande exacte, le résultat initial attendu, l'algorithme en français et le corrigé.
 
-## Validation formateur
+## Atelier de décision complémentaire
+
+Le dossier `exercices/audit-migration/` propose un audit sans code. À partir de `data/migration-inventory.csv`, il faut produire une recommandation de migration Java 21 vers Java 25 avec, pour chaque décision, un statut, un effet observable, une méthode de validation, un risque et un retour arrière.
+
+Le livrable à compléter est `exercices/audit-migration/recommandation.md`. Une référence est disponible dans `solutions/audit-migration/`.
+
+## Démonstrations
+
+Le dossier `demos/` complète les exercices avec des exemples sur :
+
+- les variables anonymes ;
+- la Javadoc Markdown ;
+- les fichiers source compacts ;
+- les imports de modules ;
+- les constructeurs flexibles ;
+- les Stream Gatherers ;
+- la Foreign Function & Memory API ;
+- la Class-File API ;
+- KEM et KDF.
+
+Les commandes et les résultats attendus sont indiqués dans le Guide.
+
+## Travailler sans perdre ses modifications
+
+Mettre le travail en cours de côté :
+
+```bash
+git stash
+```
+
+Le récupérer :
+
+```bash
+git stash pop
+```
+
+Repartir de la version du dépôt :
+
+```bash
+git restore .
+```
+
+> **Attention**
+> `git restore .` supprime les modifications non enregistrées sans demander confirmation. Utiliser `git stash` pour les conserver.
+
+## Solutions
+
+Les solutions sont disponibles dans `solutions/` sous le même nom que les exercices. Pendant la formation, ne les ouvrir qu'au moment indiqué par le formateur.
+
+## Validation complète
 
 Depuis la racine du dépôt :
 
@@ -74,24 +127,4 @@ Depuis la racine du dépôt :
 ./scripts/verify-all.sh
 ```
 
-Le script compile les solutions et les démonstrations avec `--release 25`, puis exécute chaque exercice dans ses deux états : le code de départ, dont l'échec attendu est vérifié, et la solution, qui doit passer au vert.
-
-## Garder ou jeter son travail
-
-Avant de changer d'étape, mettre son travail de côté :
-
-```bash
-git stash
-```
-
-Le récupérer plus tard :
-
-```bash
-git stash pop
-```
-
-Pour repartir de l'état de référence et **jeter** ce qui n'a pas été commité, sans confirmation :
-
-```bash
-git restore .
-```
+Le script vérifie les échecs pédagogiques attendus dans le code de départ, puis compile et exécute les solutions et les démonstrations.
